@@ -1,26 +1,43 @@
-# Express Boilerplate!
+# BugTrax API
 
-This is a boilerplate project used for starting new projects!
+#### This project was created by Evan Miller
+##### The Server is built using Node, Express, and PostgreSQL
+##### All testing is done with Chai/Mocha
 
-## Set up
+## To get started
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+- The server delivers full user functionality, with, JWT Tokens, and JWT Token refresh, registration, secure login, and secure endpoints.
+All user functions are encrypted with proper security measures in mind. These measures include:
+JWT Tokens and Refresh are issued securly, while expiring along with the session if the user goes idle for more then 5 minutes
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Password incryption using the NPM library BCrypt, with secure hashing and salting rounds
+Cross Site Scripting (XSS) prevention on issue adds and user registration
+KnexJS provides built in SQL injection prevention
+- Protected endpoints are authenticated through a JWT service middleware that checks for the API token in the header provided through the client.
+- All of the client side enviornmental variables are securly hidden in .env files.
+- Best **RESTful** practices were used when building the server.
 
-## Scripts
+
+## Usage
+### To run the server on a local host: 
+
+### Scripts
 
 Start the application `npm start`
 
 Start nodemon for the application `npm run dev`
 
-Run the tests `npm test`
+Run the tests in watch mode `npm test`
 
-## Deploying
+Migrate the dev database `npm run migrate`
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+Migrate the test database `npm run migrate:test`
+
+### Configuring Postgres
+
+For tests involving time to run properly, configure your Postgres database to run in the UTC timezone.
+
+1. Locate the `postgresql.conf` file for your Postgres installation.
+   1. E.g. for an OS X, Homebrew install: `/usr/local/var/postgres/postgresql.conf`
+   2. E.g. on Windows, _maybe_: `C:\Program Files\PostgreSQL\11.2\data\postgresql.conf`
+2. Find the `timezone` line and set it to `UTC`
